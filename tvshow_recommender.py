@@ -5,8 +5,6 @@ df=pd.read_csv('tvshow_metadata.csv', delimiter = ',')
 
 df=df[['Title','Year','imdbRating','imdbVotes','totalSeasons']]
 
-df
-
 df['Title'].head(20)
 # Most Trending Shows
 

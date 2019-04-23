@@ -16,15 +16,15 @@ import re
 import seaborn as sns
 import pprint as pp
 
-books = pd.read_csv('D:\\Documents\\College\Degree\\8th Sem\\Project\\Book.csv', sep=';', error_bad_lines=False,warn_bad_lines=False, encoding="latin-1")
+books = pd.read_csv('Book.csv', sep=',', error_bad_lines=False,warn_bad_lines=False, encoding="latin-1")
 
 books.columns = ['ISBN', 'bookTitle', 'bookAuthor', 'yearOfPublication', 'publisher', 'imageUrlS', 'imageUrlM', 'imageUrlL']
 
-users = pd.read_csv('D:\\Documents\\College\Degree\\8th Sem\\Project\\Book-Users1.csv', sep=',', error_bad_lines=False, warn_bad_lines=False,encoding="latin-1")
+users = pd.read_csv('Book-Users1.csv', sep=',', error_bad_lines=False, warn_bad_lines=False,encoding="latin-1")
 
 users.columns = ['userID', 'Location', 'Age']
 
-ratings = pd.read_csv('D:\\Documents\\College\Degree\\8th Sem\\Project\\Book-Ratings1.csv', sep=',', error_bad_lines=False,warn_bad_lines=False, encoding="latin-1")
+ratings = pd.read_csv('Book-Ratings1.csv', sep=',', error_bad_lines=False,warn_bad_lines=False, encoding="latin-1")
 
 ratings.columns = ['userID', 'ISBN', 'bookRating']
 
