@@ -1,0 +1,133 @@
+{% extends 'layout.html' %} {% block body %}
+    <!-- =============== START OF WRAPPER =============== -->
+    <div class="wrapper">
+
+        {% for show in tv_show_details %}
+        
+        <!-- =============== START OF MOVIE DETAIL INTRO =============== -->
+        <section class="movie-detail-intro overlay-gradient ptb50" style="background: url(../static/images/other/touchkit.jpg);">
+        </section>
+        <!-- =============== END OF MOVIE DETAIL INTRO =============== -->
+
+
+        <!-- =============== START OF MOVIE DETAIL INTRO 2 =============== -->
+        <section class="movie-detail-intro2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="movie-poster">
+                            <img src="{{ show.Poster }}" alt="">
+
+                            <a href="" class="play-video">
+                                <i class="fa fa-play"></i>
+                            </a>
+                        </div>
+
+
+                        <div class="movie-details">
+                            <h3 class="title">{{ show.Title }}</h3>
+
+                            <ul class="movie-subtext">
+                                <li>{{ show.Rated }} Rated</li>
+                                <li>{{ show.totalSeasons }} Seasons</li>
+                                <li>{{ show.Runtime }} Mins</li>
+                                <li>{{ show.Genre }}</li>
+                                <li>{{ show.Year }}</li>
+                            </ul>
+
+                            <a class="btn btn-success" href="#">
+                                    <i class="fa fa-plus"></i> Add to list</a>
+
+                            <a class="btn btn-danger" href="#">
+                                            <i class="fa fa-shopping-cart"></i> Buy now</a>
+
+                            <div class="rating mt10">
+                                <i class="fa fa-star"></i>
+                                <span>{{ show.imdbRating }} Rating</span>
+                            </div>
+
+                            <div class="rating mt10">
+                                    <i class="fa fa-users"></i>
+                                    <span>{{ show.imdbVotes }} Votes</span>
+                                </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =============== End OF MOVIE DETAIL INTRO 2 =============== -->
+
+
+        <!-- =============== START OF MOVIE DETAIL MAIN SECTION =============== -->
+        <section class="movie-detail-main ptb100">
+            <div class="container">
+
+                <div class="row">
+                    <!-- Start of Movie Main -->
+                    <div class="col-lg-8 col-sm-12">
+                        <div class="inner pr50">
+
+                            <!-- Storyline -->
+                            <div class="storyline">
+                                    <h3 class="title">Storyline</h3>
+                                    <p>
+                                            {{ show.Plot }}
+                                    </p>
+                                </div>
+
+    
+                                <div class="storyline">
+                                        <h3 class="title">Cast</h3>
+                                        <p>
+                                            {{ show.Actors }}
+                                        </p>
+                                </div>
+
+                                <div class="storyline">
+                                        <h3 class="title">Writers</h3>
+                                        <p>
+                                            {{ show.Writer }}
+                                        </p>
+                                </div>
+    
+                                <div class="storyline">
+                                        <h3 class="title">Awards</h3>
+                                        <p>
+                                            {{ show.Awards }}
+                                        </p>
+                                </div>
+
+                        </div>
+                    </div>
+                    <!-- End of Movie Main -->
+
+
+                    <!-- Start of Sidebar -->
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="sidebar">
+
+                            <!-- Start of Details Widget -->
+                            <aside class="widget widget-movie-details">
+                                <h3 class="title">Details</h3>
+
+                                <ul>
+                                    <li><strong>Country: </strong>{{ show.Country }}</li>
+                                    <li><strong>Language: </strong>{{ show.Language }}</li>
+                                </ul>
+                            </aside>
+                            <!-- End of Details Widget -->
+
+                        </div>
+                    </div>
+                    <!-- End of Sidebar -->
+                </div>
+
+            </div>
+        </section>
+        <!-- =============== END OF MOVIE DETAIL MAIN SECTION =============== -->
+        {% endfor %}
+{% endblock %}      

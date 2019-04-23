@@ -1,0 +1,147 @@
+{% extends 'layout.html' %} {% block body %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <h2 class="title text-center">Welcome {{name}}!</h2>
+            </div>
+        </div>
+</div>
+
+<main class="ptb50">
+        
+    <div class="container">
+
+        <!-- Start of Movie List -->
+        <div class="row">
+
+            <!-- Movie List Item -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="movie-box-3 mb30">
+                    <div class="listing-container">
+                        <!-- Movie List Image -->
+                        <div class="listing-image" style="width: 70%; margin: 0px auto;">
+                            <!-- Image -->
+                            <img src="../static/images/books.png" alt="Books">
+                        </div>
+                        <!-- Movie List Content -->
+                        <div class="listing-content">
+                            <div class="inner text-center">
+                                <a href="{{ url_for('books_home') }}">
+                                    <h2 class="title">Books</h2>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="movie-box-3 mb30">
+                    <div class="listing-container">
+                        <!-- Movie List Image -->
+                        <div class="listing-image" style="width: 70%; margin: 0px auto;">
+                            <!-- Image -->
+                            <img src="../static/images/movies.png" alt="Movies">
+                        </div>
+                        <!-- Movie List Content -->
+                        <div class="listing-content">
+                            <div class="inner text-center">
+                                <a href="{{ url_for('movies_home') }}">
+                                    <h2 class="title">Movies</h2>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="movie-box-3 mb30">
+                    <div class="listing-container">
+                        <!-- Movie List Image -->
+                        <div class="listing-image" style="width: 70%; margin: 0px auto;">
+                            <!-- Image -->
+                            <img src="../static/images/tv.png" alt="TV Shows">
+                        </div>
+                        <!-- Movie List Content -->
+                        <div class="listing-content">
+                            <div class="inner text-center">
+                                <a href="{{ url_for('tvshow_home') }}">
+                                    <h2 class="title">TV Shows</h2>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="movie-box-3 mb30">
+                    <div class="listing-container">
+                        <!-- Movie List Image -->
+                        <div class="listing-image" style="width: 70%; margin: 0px auto;">
+                            <!-- Image -->
+                            <img src="../static/images/songs.png" alt="songs">
+                        </div>
+                        <!-- Movie List Content -->
+                        <div class="listing-content">
+                            <div class="inner text-center">
+
+                                <a href="{{ url_for('songs_home') }}">
+                                    <h2 class="title">Songs</h2>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="movie-box-3 mb30">
+                    <div class="listing-container">
+                        <!-- Movie List Image -->
+                        <div class="listing-image" style="width: 70%; margin: 0px auto;">
+                            <!-- Image -->
+                            <img src="../static/images/location.png" alt="Location">
+                        </div>
+                        <!-- Movie List Content -->
+                        <div class="listing-content">
+                            <div class="inner text-center">
+                                    <a href="{{ url_for('places_near_by') }}">
+                                            <h2 class="title">Places Near Me</h2>
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="movie-box-3 mb30">
+                    <div class="listing-container">
+                        <!-- Movie List Image -->
+                        <div class="listing-image" style="width: 70%; margin: 0px auto;">
+                            <!-- Image -->
+                            <img src="../static/images/surprise.png" alt="Books">
+                        </div>
+                        <!-- Movie List Content -->
+                        <div class="listing-content">
+                            <div class="inner text-center">
+
+                                <h2 class="title">Surprise!</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- End of Movie List -->
+
+    </div>
+</main>
+{% endblock %}

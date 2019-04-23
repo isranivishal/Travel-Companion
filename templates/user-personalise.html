@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+
+    <!-- ===== Meta Tags - Description for Search Engine purposes ===== -->
+    <meta name="description" content="Travel Companion">
+    <meta name="keywords" content="recommendations,movies,tv series,songs,places to visit">
+    <meta name="author" content="Travel Companion Team">
+
+    <!-- ===== Website Title ===== -->
+    <title>Travel Companion</title>
+
+    <!-- ===== Google Fonts ===== -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+
+    <!-- ===== CSS links ===== -->
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/revolution/css/settings.css">
+    <link rel="stylesheet" type="text/css" href="../static/revolution/css/layers.css">
+    <link rel="stylesheet" type="text/css" href="../static/revolution/css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/jquery.mmenu.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/responsive.css">
+
+</head>
+
+<body>
+
+    <!-- =============== START OF RESPONSIVE - MAIN NAV =============== -->
+    <nav id="main-mobile-nav"></nav>
+    <!-- =============== END OF RESPONSIVE - MAIN NAV =============== -->
+
+    <!-- =============== START OF WRAPPER =============== -->
+    <div class="wrapper">
+
+        <header class="header">
+            <div class="container">
+
+                <!-- ====== Start of Navbar ====== -->
+                <nav class="navbar navbar-expand-lg">
+
+                    <a class="navbar-brand" href="{{ url_for('index') }}">
+
+                        <h3 style="font-family:'Kaushan Script';">Travel Companion</h3>
+
+                    </a>
+
+                    <button id="mobile-nav-toggler" class="hamburger hamburger--collapse" type="button">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+
+                    <!-- ====== Start of #main-nav ====== -->
+                    <div class="navbar-collapse" id="main-nav">
+
+                        <!-- ====== Start of Main Menu ====== -->
+                        <ul class="navbar-nav mx-auto" style="margin-left:100% !important;" id="main-menu">
+
+                            <li class="nav-item m-right">
+                                <a href="{{ url_for('logout') }}" class="btn btn-main btn-effect">
+                                    Sign out
+                                </a>
+                            </li>
+
+                        </ul>
+                        <!-- ====== End of Main Menu ====== -->
+
+                    </div>
+                    <!-- ====== End of #main-nav ====== -->
+                </nav>
+                <!-- ====== End of Navbar ====== -->
+
+            </div>
+        </header>
+        <!-- =============== END OF HEADER NAVIGATION =============== -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h3 class="title text-center">{{name}}, please enter your top 3 choices here.</h3>
+
+                    <h4 class="title text-center">It will help us find books,tv shows,movies & songs you will love!</h4>
+                    <a href="{{ url_for('home') }}" class="btn btn-link btn-block">Skip this step!</a>
+                </div>
+            </div>
+        </div>
+
+        <main class="ptb50">
+
+            <div class="container">
+                <form id="cariera_registration" action=" {{ url_for('get_user_data')}} " method="POST">
+
+                    <div class="form-group">
+                        <label for="movify_user_login">Books</label>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="book1" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="book2" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="book3" class="form-control" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movify_user_login">Movies</label>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="movie1" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="movie2" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="movie3" class="form-control" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movify_user_login">TV Shows</label>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="tvshow1" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="tvshow2" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="tvshow3" class="form-control" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movify_user_login">Songs</label>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="songs1" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="songs2" class="form-control" type="text" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <input name="songs3" class="form-control" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row text-center">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <input type="submit" class="btn btn-success" value="Submit" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        {% include 'includes/_footer.html' %}
+
+    </div>
+    <!-- =============== END OF WRAPPER =============== -->
+
+    <!-- =============== START OF GENERAL SEARCH WRAPPER =============== -->
+    <div class="general-search-wrapper">
+        <form class="general-search" role="search" method="get" action="#">
+            <input type="text" placeholder="Type and hit enter...">
+            <span id="general-search-close" class="ti-close toggle-search"></span>
+        </form>
+    </div>
+    <!-- =============== END OF GENERAL SEARCH WRAPPER =============== -->
+
+    <!-- ===== Start of Back to Top Button ===== -->
+    <div id="backtotop">
+        <a href="#"></a>
+    </div>
+    <!-- ===== End of Back to Top Button ===== -->
+
+
+    <!-- ===== All Javascript at the bottom of the page for faster page loading ===== -->
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.ajaxchimp.js"></script>
+    <script src="../static/js/jquery.magnific-popup.min.js"></script>
+    <script src="../static/js/jquery.mmenu.js"></script>
+    <script src="../static/js/jquery.inview.min.js"></script>
+    <script src="../static/js/jquery.countTo.min.js"></script>
+    <script src="../static/js/jquery.countdown.min.js"></script>
+    <script src="../static/js/owl.carousel.min.js"></script>
+    <script src="../static/js/imagesloaded.pkgd.min.js"></script>
+    <script src="../static/js/isotope.pkgd.min.js"></script>
+    <script src="../static/js/headroom.js"></script>
+    <script src="../static/js/custom.js"></script>
+
+    <!-- ===== Slider Revolution core JavaScript files ===== -->
+    <script type="text/javascript" src="../static/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="../static/revolution/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- ===== Slider Revolution extension scripts ===== -->
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.actions.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.carousel.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.kenburn.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.layeranimation.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.migration.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.navigation.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.parallax.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.slideanims.min.js">
+    </script>
+    <script type="text/javascript" src="../static/revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+</body>
+
+</html>

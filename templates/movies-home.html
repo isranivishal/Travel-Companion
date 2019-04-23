@@ -1,0 +1,150 @@
+{% extends 'layout.html' %} {% block body %}
+        <!-- =============== START OF PAGE HEADER =============== -->
+        <section class="page-header overlay-gradient" style="background: url(../static/images/posters/movie-collection.jpg);">
+            <div class="container">
+                <div class="inner">
+                    <h2 class="title">Tv Shows</h2>
+                </div>
+            </div>
+        </section>
+        <!-- =============== END OF PAGE HEADER =============== -->
+
+        <!-- =============== START OF MAIN =============== -->
+        <main class="bg-light ptb100">
+            <div class="container">
+
+                <h2 class="title">Trending Shows</h2>
+                <!-- Start of Movie List -->
+                <div class="row">
+
+                    {% for shows in tv_show_details %}
+                        {% for show in shows %}
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="movie-box-3 mb30">
+                                <div class="listing-container">
+
+                                    <!-- Movie List Image -->
+                                    <div class="listing-image">
+                                        <!-- Image -->
+                                        <img src="{{ show.Poster }}" alt="">
+                                    </div>
+
+                                    <!-- Movie List Content -->
+                                    <div class="listing-content">
+                                        <div class="inner">
+
+                                            <h2 class="title">{{ show.Title }}</h2>
+
+                                            <!-- Rating -->
+                                            <div class="stars">
+                                                <div class="rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <span>{{ show.imdbRating }}</span>
+                                                    <span class="category">{{ show.Genre }}</span>
+                                                </div>
+                                            </div>
+
+                                            <p>{{ show.Plot }}</p>
+
+                                            <a href="movie-detail.html" class="btn btn-main btn-effect">details</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}      
+                </div>
+
+                <h2 class="title">Most Popular Shows</h2>
+                <!-- Start of Movie List -->
+                <div class="row">
+
+                    {% for shows in tv_show_details1 %}
+                        {% for show in shows %}
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="movie-box-3 mb30">
+                                <div class="listing-container">
+
+                                    <!-- Movie List Image -->
+                                    <div class="listing-image">
+                                        <!-- Image -->
+                                        <img src="{{ show.Poster }}" alt="">
+                                    </div>
+
+                                    <!-- Movie List Content -->
+                                    <div class="listing-content">
+                                        <div class="inner">
+
+                                            <h2 class="title">{{ show.Title }}</h2>
+
+                                            <!-- Rating -->
+                                            <div class="stars">
+                                                <div class="rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <span>{{ show.imdbRating }}</span>
+                                                    <span class="category">{{ show.Genre }}</span>
+                                                </div>
+                                            </div>
+
+                                            <p>{{ show.Plot }}</p>
+
+                                            <a href="movie-detail.html" class="btn btn-main btn-effect">details</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}      
+                </div>
+
+                <h2 class="title">Indian Shows</h2>
+                <!-- Start of Movie List -->
+                <div class="row">
+
+                    {% for shows in tv_show_details2 %}
+                        {% for show in shows %}
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="movie-box-3 mb30">
+                                <div class="listing-container">
+
+                                    <!-- Movie List Image -->
+                                    <div class="listing-image">
+                                        <!-- Image -->
+                                        <img src="{{ show.Poster }}" alt="">
+                                    </div>
+
+                                    <!-- Movie List Content -->
+                                    <div class="listing-content">
+                                        <div class="inner">
+
+                                            <h2 class="title">{{ show.Title }}</h2>
+
+                                            <!-- Rating -->
+                                            <div class="stars">
+                                                <div class="rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <span>{{ show.imdbRating }}</span>
+                                                    <span class="category">{{ show.Genre }}</span>
+                                                </div>
+                                            </div>
+
+                                            <p>{{ show.Plot }}</p>
+
+                                            <a href="movie-detail.html" class="btn btn-main btn-effect">details</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}      
+                </div>
+            </div>
+        </main>
+        <!-- =============== END OF MAIN =============== -->
+{% endblock %}               

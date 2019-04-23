@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+
+  <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+  <script src="../static/js/jquery-3.2.1.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+
+  <title>Places Near Me</title>
+  <style>
+    #map {
+      height: 100%;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #right-panel {
+      font-family: 'Roboto', 'sans-serif';
+      line-height: 30px;
+      padding-left: 10px;
+    }
+
+    #right-panel select,
+    #right-panel input {
+      font-size: 15px;
+    }
+
+    #right-panel select {
+      width: 100%;
+    }
+
+    #right-panel i {
+      font-size: 12px;
+    }
+
+    #right-panel {
+      font-family: Arial, Helvetica, sans-serif;
+      position: absolute;
+      right: 5px;
+      top: 60%;
+      margin-top: -195px;
+      height: 330px;
+      width: 200px;
+      padding: 5px;
+      z-index: 5;
+      border: 1px solid #999;
+      background: #fff;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 0 0 5px 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      height: 271px;
+      width: 200px;
+      overflow-y: scroll;
+    }
+
+    li {
+      background-color: #f1f1f1;
+      padding: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    li:nth-child(odd) {
+      background-color: #fcfcfc;
+    }
+
+    #more {
+      width: 100%;
+      margin: 5px 0 0 0;
+    }
+  </style>
+
+  <script>
+    url = location.search;
+    var split_url = url.split('=');
+    var latlon;
+    var map;
+
+    var a = split_url[1];
+
+    var x = document.getElementById("demo");
+    var latitude;
+    var longitude;
+
+    function showPosition(position) {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      latlon = position.coords.latitude + "," + position.coords.longitude;
+      initMap();
+    }
+
+    function navigatorFunction() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+
+    }
+
+    function initMap() {
+      // Create the map.
+      var myCenter = new google.maps.LatLng(latitude, longitude);
+      var pyrmont = {
+        lat: latitude,
+        lng: longitude
+      };
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: pyrmont,
+        zoom: 17
+      });
+      var marker = new google.maps.Marker({
+        position: myCenter
+      });
+      marker.setMap(map);
+
+
+      // Create the places service.
+      var service = new google.maps.places.PlacesService(map);
+      var getNextPage = null;
+      var moreButton = document.getElementById('more');
+      moreButton.onclick = function () {
+        moreButton.disabled = true;
+        if (getNextPage) getNextPage();
+      };
+
+      // Perform a nearby search.
+      service.nearbySearch(
+
+        {
+          location: pyrmont,
+          radius: 500,
+          type: [a]
+        },
+        function (results, status, pagination) {
+          if (status !== 'OK') return;
+
+          createMarkers(results);
+          moreButton.disabled = !pagination.hasNextPage;
+          getNextPage = pagination.hasNextPage && function () {
+            pagination.nextPage();
+          };
+        });
+    }
+
+    function createMarkers(places) {
+      var bounds = new google.maps.LatLngBounds();
+      var placesList = document.getElementById('places');
+
+      for (var i = 0, place; place = places[i]; i++) {
+        var image = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        var marker = new google.maps.Marker({
+          map: map,
+          icon: image,
+          title: place.name,
+          position: place.geometry.location
+        });
+
+        var li = document.createElement('li');
+        li.textContent = place.name;
+        placesList.appendChild(li);
+
+        bounds.extend(place.geometry.location);
+      }
+      map.fitBounds(bounds);
+    }
+  </script>
+
+</head>
+
+<body>
+
+  <script type="text/javascript">
+    $(window).on('load', function () {
+      $('#exampleModalLong').modal('show');
+    });
+  </script>
+
+
+  <div class="modal fade" id="exampleModalLong" role="dialog">
+    <div class="modal-dialog modal-lg" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Where would you like to go?</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+                <li  class="list-group-item"><a href="?var=airport">Airport</a></li>
+                <li  class="list-group-item"><a href="?var=amusement_park">Amusement Park</a></li>
+                <li  class="list-group-item"><a href="?var=aquarium">Aquarium</a></li>
+                <li  class="list-group-item"><a href="?var=art_gallery">Art Gallery</a></li>
+                <li  class="list-group-item"><a href="?var=book_store">Book Store</a></li>
+                <li  class="list-group-item"><a href="?var=bowling_alley">Bowling Alley</a></li>
+                <li  class="list-group-item"><a href="?var=cafe">Cafe</a></li>
+                <li  class="list-group-item"><a href="?var=casino">Casino</a></li>
+                <li  class="list-group-item"><a href="?var=gas_station">Gas_station</a></li>
+                <li  class="list-group-item"><a href="?var=hindu_temple">Hindu_temple</a></li>
+                <li  class="list-group-item"><a href="?var=library">Library</a></li>
+                <li  class="list-group-item"><a href="?var=lodging">Lodging</a></li>
+                <li  class="list-group-item"><a href="?var=mosque">Mosque</a></li>
+                <li  class="list-group-item"><a href="?var=museum">Museum</a></li>
+                <li  class="list-group-item"><a href="?var=park">Park</a></li>
+                <li  class="list-group-item"><a href="?var=pharmacy">Pharmacy</a></li>
+                <li  class="list-group-item"><a href="?var=restaurant">Restaurant</a></li>
+                <li  class="list-group-item"><a href="?var=shopping_mall">Shopping Mall</a></li>
+                <li  class="list-group-item"><a href="?var=spa">Spa</a></li>
+                <li  class="list-group-item"><a href="?var=synagogue">Synagogue</a></li>
+                <li  class="list-group-item"><a href="?var=train_station">Train Station</a></li>
+                <li  class="list-group-item"><a href="?var=zoo">Zoo</a></li>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div id="map"></div>
+
+  <div id="right-panel">
+    <h2>Results</h2>
+    <ul id="places"></ul>
+    <button id="more">More results</button>
+  </div>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcAImNokMMNfrUwPeL9nGI5yIAHjPbamk&libraries=places&callback=navigatorFunction"
+    async defer></script>
+</body>
+
+</html>
