@@ -1,0 +1,7 @@
+flask
+bson
+pymongo
+flask_bcrypt
+nltk
+sklearn
+surprise

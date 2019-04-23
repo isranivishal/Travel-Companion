@@ -1,0 +1,142 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<!-- =============== START OF MAIN =============== -->
+<section class="page-header overlay-gradient" style="background: url(static/images/posters/movie-collection.jpg);">
+    <div class="container">
+        <div class="inner">
+            <h3 class="title">User Profile</h3>
+        </div>
+    </div>
+</section>
+
+<main class="ptb100">
+    <div class="container">
+
+        <h2 class="title text-center">Account Details</h2>
+        <div class="row">
+            {% for user in user_details %}
+                <div class="col-md-12 col-sm-12">
+                    <section>
+                        <h3> Name : {{ user.first_name }} {{ user.last_name }} </h3>
+                    </section>    
+                    <section>
+                        <h3> Email ID : {{ user.email_id }}</h3>
+                    </section>    
+                        
+                    
+                </div>
+        </div>
+        <hr>
+
+        <!-- Start of Movie List -->
+        <h2 class="title text-center">History</h2>
+        <div class="row">
+                <h3 class="title">Books</h3>
+                {% for books in user.history.books %}
+                
+                <div class="col-md-12 col-sm-12">
+                    <div class="watch-later-item">
+                        <div class="listing-container">
+
+                            <!-- Movie List Image -->
+                            <div class="listing-image">
+                                <img src="../static/images/posters/poster-1.jpg" class="img-shadow" alt="">
+                            </div>
+
+                            <!-- Movie List Content -->
+                            <div class="listing-content">
+                                <div class="inner">
+                                    <h4 class="title">{{ books }}</h4>
+                                    <a href="movie-detail.html" class="btn btn-main btn-effect">watch now</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}  
+
+                <h3 class="title">Movies</h3>
+
+                {% for movies in user.history.movies %}
+                <div class="col-md-12 col-sm-12">
+                    <div class="watch-later-item">
+                        <div class="listing-container">
+
+                            <!-- Movie List Image -->
+                            <div class="listing-image">
+                                <img src="../static/images/posters/poster-1.jpg" class="img-shadow" alt="">
+                            </div>
+
+                            <!-- Movie List Content -->
+                            <div class="listing-content">
+                                <div class="inner">
+                                    <h4 class="title">{{ movies }}</h4>
+                                    <a href="movie-detail.html" class="btn btn-main btn-effect">watch now</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %} 
+
+                <h3 class="title">TV Shows</h3>
+
+                {% for tvshows in user.history.tv_shows %}
+                <div class="col-md-12 col-sm-12">
+                    <div class="watch-later-item">
+                        <div class="listing-container">
+
+                            <!-- Movie List Image -->
+                            <div class="listing-image">
+                                <img src="../static/images/posters/poster-1.jpg" class="img-shadow" alt="">
+                            </div>
+
+                            <!-- Movie List Content -->
+                            <div class="listing-content">
+                                <div class="inner">
+                                    <h4 class="title">{{ tvshows }}</h4>
+                                    <a href="movie-detail.html" class="btn btn-main btn-effect">watch now</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %} 
+
+                <h3 class="title">Songs</h3>
+
+                {% for songs in user.history.songs %}
+                <div class="col-md-12 col-sm-12">
+                    <div class="watch-later-item">
+                        <div class="listing-container">
+
+                            <!-- Movie List Image -->
+                            <div class="listing-image">
+                                <img src="../static/images/posters/poster-1.jpg" class="img-shadow" alt="">
+                            </div>
+
+                            <!-- Movie List Content -->
+                            <div class="listing-content">
+                                <div class="inner">
+                                    <h4 class="title">{{ songs }}</h4>
+                                    <a href="movie-detail.html" class="btn btn-main btn-effect">watch now</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}            
+            {% endfor %}
+                
+        </div>
+        <!-- End of Movie List -->
+
+    </div>
+</main>
+<!-- =============== END OF MAIN =============== -->
+{% endblock %}
