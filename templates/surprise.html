@@ -46,9 +46,26 @@
 
         {% include 'includes/_nav.html' %}
 
-        {% block body %}{% endblock %}
+        <div class="modal fade" id="exampleModalLong" role="dialog">
+                <div class="modal-dialog modal-lg" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">We have a surprise for you!</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
 
-        {% include 'includes/_footer.html' %}
+                        <center><img src="{{ image }}"></center>
+
+                        <h4 class="text-center"> Our Recommendation is a  {{ type }} : <strong>{{ name }}<strong></h4>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
 
     </div>
     <!-- =============== END OF WRAPPER =============== -->
@@ -110,24 +127,14 @@
 
 
     <script>
-        
-        $(document).ready(function(){
-            $("#hideThis").hide();
-            
-            $('#togg').change(function() {
-                
-                if (this.checked) {
-                    $("#hideThis").show();
-                } else {
-                    $("#hideThis").hide();
-                }
-            });
+        $(window).on('load', function () {
+            $('#exampleModalLong').modal('show');
         });
 
-        $(window).on('load', function () {
-                $('#exampleModalLong').modal('show');
+        $("#exampleModalLong").on("hidden.bs.modal", function () {
+            window.location = "{{ url_for('home')}}";
         });
-  </script>
+    </script>
 
 </body>
 

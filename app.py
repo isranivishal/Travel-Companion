@@ -5,6 +5,7 @@ import json
 from flask_bcrypt import Bcrypt
 import numpy as np
 import pandas as pd
+import random
 
 # from .movies_recommender import get_top_movies_list,get_movie_recommendation,get_genre_list
 
@@ -288,6 +289,32 @@ def songs_home():
 def places_near_by():
     return render_template('places-to-visit.html')
 
+@app.route('/surprise')
+def surprise():
+    name_of_surprise=""
+    image_of_surprise=""
+    type_of_surprise=""
+    
+    csvfiles=['Book1.csv','tvshow_metadata.csv']
+    choice=random.choice(csvfiles)
+    f = pd.read_csv(choice ,sep=',', error_bad_lines=False,warn_bad_lines=False, encoding="utf-8-sig")
+    sample=f.sample()
+
+    if choice == "Book1.csv":
+        name=sample['Title'].tolist()
+        image=sample['Image-URL-L'].tolist()
+        name_of_surprise=name[0]
+        image_of_surprise=image[0]
+        type_of_surprise="Book"
+
+    elif choice == "tvshow_metadata.csv":
+        name1=sample['Title'].tolist()
+        image1=sample['Poster'].tolist()
+        name_of_surprise=name1[0]
+        image_of_surprise=image1[0]
+        type_of_surprise="TV Show"
+
+    return render_template('surprise.html',name=name_of_surprise,image=image_of_surprise,type=type_of_surprise)
 
 # curd operations
 @app.route("/get_all_data", methods = ['GET'])
