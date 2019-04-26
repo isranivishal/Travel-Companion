@@ -2,8 +2,8 @@
         <!-- =============== START OF PAGE HEADER =============== -->
         <section class="page-header overlay-gradient" style="background: url(../static/images/posters/movie-collection.jpg);">
             <div class="container">
-                <div class="inner">
-                    <h2 class="title">Tv Shows</h2>
+                <div class="inner text-center">
+                    <h2 class="title">Books</h2>
                 </div>
             </div>
         </section>
@@ -13,136 +13,93 @@
         <main class="bg-light ptb100">
             <div class="container">
 
-                <h2 class="title">Trending Shows</h2>
+                <h2 class="title">Top Books</h2>
                 <!-- Start of Movie List -->
                 <div class="row">
+                  {% for books in topbooks %}  
+                    {% for book in books %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="movie-box-3 mb30">
+                            <div class="listing-container">
 
-                    {% for shows in tv_show_details %}
-                        {% for show in shows %}
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="movie-box-3 mb30">
-                                <div class="listing-container">
 
-                                    <!-- Movie List Image -->
-                                    <div class="listing-image">
-                                        <!-- Image -->
-                                        <img src="{{ show.Poster }}" alt="">
-                                    </div>
-
-                                    <!-- Movie List Content -->
-                                    <div class="listing-content">
-                                        <div class="inner">
-
-                                            <h2 class="title">{{ show.Title }}</h2>
-
-                                            <!-- Rating -->
-                                            <div class="stars">
-                                                <div class="rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <span>{{ show.imdbRating }}</span>
-                                                    <span class="category">{{ show.Genre }}</span>
-                                                </div>
-                                            </div>
-
-                                            <p>{{ show.Plot }}</p>
-
-                                            <a href="movie-detail.html" class="btn btn-main btn-effect">details</a>
-                                        </div>
-                                    </div>
-
+                                <div class="listing-image" style="width: 50%; margin: 0px auto;">
+                                        <img src="../static/images/books.png" alt="songs">
                                 </div>
+
+                                <!-- Movie List Content -->
+                                <div class="listing-content text-center">
+                                    <div class="inner text-center">
+
+                                        <h2 class="title">{{ book['Book-Title'] }}</h2>
+
+                                        <a href="books_details/{{book['Book-Title']}}" class="btn btn-main btn-effect">details</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        {% endfor %}
-                    {% endfor %}      
+                    </div>
+                    {% endfor %}  
+                {% endfor %}     
                 </div>
 
-                <h2 class="title">Most Popular Shows</h2>
+                <h2 class="title">Recommendations for You</h2>
                 <!-- Start of Movie List -->
                 <div class="row">
 
-                    {% for shows in tv_show_details1 %}
-                        {% for show in shows %}
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="movie-box-3 mb30">
-                                <div class="listing-container">
+                    {% for books in recommended %}  
+                        {% for book in books %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="movie-box-3 mb30">
+                            <div class="listing-container">
 
-                                    <!-- Movie List Image -->
-                                    <div class="listing-image">
-                                        <!-- Image -->
-                                        <img src="{{ show.Poster }}" alt="">
-                                    </div>
 
-                                    <!-- Movie List Content -->
-                                    <div class="listing-content">
-                                        <div class="inner">
-
-                                            <h2 class="title">{{ show.Title }}</h2>
-
-                                            <!-- Rating -->
-                                            <div class="stars">
-                                                <div class="rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <span>{{ show.imdbRating }}</span>
-                                                    <span class="category">{{ show.Genre }}</span>
-                                                </div>
-                                            </div>
-
-                                            <p>{{ show.Plot }}</p>
-
-                                            <a href="movie-detail.html" class="btn btn-main btn-effect">details</a>
-                                        </div>
-                                    </div>
-
+                                <div class="listing-image" style="width: 50%; margin: 0px auto;">
+                                        <img src="../static/images/books.png" alt="songs">
                                 </div>
+
+                                <!-- Movie List Content -->
+                                <div class="listing-content text-center">
+                                    <div class="inner text-center">
+
+                                        <h2 class="title">{{ book['Book-Title'] }}</h2>
+
+                                        <a href="books_details/{{book['Book-Title']}}" class="btn btn-main btn-effect">details</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        {% endfor %}
-                    {% endfor %}      
+                    </div>
+                    {% endfor %}   
+                    {% endfor %}   
                 </div>
 
-                <h2 class="title">Indian Shows</h2>
+                <h2 class="title">TV Show Recommendation of a book</h2>
                 <!-- Start of Movie List -->
                 <div class="row">
 
-                    {% for shows in tv_show_details2 %}
-                        {% for show in shows %}
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-                            <div class="movie-box-3 mb30">
-                                <div class="listing-container">
-
-                                    <!-- Movie List Image -->
-                                    <div class="listing-image">
-                                        <!-- Image -->
-                                        <img src="{{ show.Poster }}" alt="">
-                                    </div>
-
-                                    <!-- Movie List Content -->
-                                    <div class="listing-content">
-                                        <div class="inner">
-
-                                            <h2 class="title">{{ show.Title }}</h2>
-
-                                            <!-- Rating -->
-                                            <div class="stars">
-                                                <div class="rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <span>{{ show.imdbRating }}</span>
-                                                    <span class="category">{{ show.Genre }}</span>
-                                                </div>
-                                            </div>
-
-                                            <p>{{ show.Plot }}</p>
-
-                                            <a href="movie-detail.html" class="btn btn-main btn-effect">details</a>
-                                        </div>
-                                    </div>
-
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="movie-box-3 mb30">
+                            <div class="listing-container">
+                                <div class="listing-image" style="width: 50%; margin: 0px auto;">
+                                        <img src="../static/images/tv.png" alt="songs">
                                 </div>
+
+                                <!-- Movie List Content -->
+                                <div class="listing-content text-center">
+                                    <div class="inner text-center">
+
+                                        <h2 class="title">Les Miserables</h2>
+
+                                        <a href="" class="btn btn-main btn-effect">details</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        {% endfor %}
-                    {% endfor %}      
+                    </div>   
                 </div>
             </div>
         </main>

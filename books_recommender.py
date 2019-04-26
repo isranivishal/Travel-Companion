@@ -14,36 +14,26 @@ import numpy as np
 import os, sys
 import re
 import seaborn as sns
-import pprint as pp
 
 books = pd.read_csv('Book.csv', sep=',', error_bad_lines=False,warn_bad_lines=False, encoding="latin-1")
 
-books.columns = ['ISBN', 'bookTitle', 'bookAuthor', 'yearOfPublication', 'publisher', 'imageUrlS', 'imageUrlM', 'imageUrlL']
+users = pd.read_csv('Book-User1.csv', sep=',', error_bad_lines=False, warn_bad_lines=False,encoding="latin-1")
 
-users = pd.read_csv('Book-Users1.csv', sep=',', error_bad_lines=False, warn_bad_lines=False,encoding="latin-1")
-
-users.columns = ['userID', 'Location', 'Age']
-
-ratings = pd.read_csv('Book-Ratings1.csv', sep=',', error_bad_lines=False,warn_bad_lines=False, encoding="latin-1")
-
-ratings.columns = ['userID', 'ISBN', 'bookRating']
+ratings = pd.read_csv('Book-Rating1.csv', sep=',', error_bad_lines=False,warn_bad_lines=False, encoding="latin-1")
 
 # Top Books Based on ratings
 def get_top_list():
-    ratings_count = pd.DataFrame(ratings.groupby('ISBN')['bookRating'].sum())
-    top10= ratings_count.sort_values('bookRating',ascending=False).head(10)
-    return top10
-
-top=get_top_list()
-print(top)  
+    ratings_count = pd.DataFrame(ratings.groupby('ISBN')['Book-Rating'].sum())
+    top10 = ratings_count.sort_values('Book-Rating',ascending=False).head(7)
+    return top10.index.tolist()
 
 # Find Similar books
 def get_book_recommendation(input_book):
     list_of_similar_books=[]
     
-    booksRatings = ratings.pivot_table(index='userID',columns='ISBN',values='bookRating')
-    average_ratings = pd.DataFrame(ratings.groupby('ISBN')['bookRating'].mean())
-    average_ratings['rating-count'] = pd.DataFrame(ratings.groupby('ISBN')['bookRating'].count())
+    booksRatings = ratings.pivot_table(index='User-ID',columns='ISBN',values='Book-Rating')
+    average_ratings = pd.DataFrame(ratings.groupby('ISBN')['Book-Rating'].mean())
+    average_ratings['rating-count'] = pd.DataFrame(ratings.groupby('ISBN')['Book-Rating'].count())
     userRating = booksRatings[input_book]
     
     similarBooks = booksRatings.corrwith(userRating)
@@ -54,4 +44,4 @@ def get_book_recommendation(input_book):
 
     return list_of_similar_books
 
-get_book_recommendation('0446605239')
+    
