@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import random
 
-# from .movies_recommender import get_top_movies_list,get_movie_recommendation,get_genre_list
+from .movies_recommender import get_top_movies_list,get_movie_recommendation,get_genre_list
 
 client = MongoClient('127.0.0.1:27017')
 db = client.travel_companion
@@ -267,19 +267,30 @@ def tvshow_details(name):
 
 @app.route("/books_home")
 def books_home():
+
     return render_template('books-home.html')
 
 @app.route("/movies_home")
 def movies_home():
-    # movies=get_genre_list('Romance')
-    # movies1=get_top_movies_list()
-    # movies2=get_movie_recommendation('The Notebook')
 
-    # print(movies)
-    # print(movies1)
-    # print(movies2)
+    toplist=get_top_movies_list().tolist()
 
-    return render_template('movies-home.html')
+    actionlist=get_genre_list('Action').tolist()
+    horrorlist=get_genre_list('Horror').tolist()
+    dramalist=get_genre_list('Drama').tolist()
+    thrillerlist=get_genre_list('Thriller').tolist()
+    comedylist=get_genre_list('Comedy').tolist()
+    romancelist=get_genre_list('Romance').tolist()
+
+    user_history = db.users.find({'id' : session['id']},{'_id':0,'history' : 1 })
+    recommendation=[]
+
+    for doc in user_history:
+        for movies in doc['history']['movies']:
+            temp=get_movie_recommendation(movies).tolist()
+            recommendation.append(temp)
+
+    return render_template('movies-home.html',recommendation=recommendation ,toplist=toplist,actionlist=actionlist,comedylist=comedylist,horrorlist=horrorlist,dramalist=dramalist,thrillerlist=thrillerlist,romancelist=romancelist)
 
 @app.route("/songs_home")
 def songs_home():
@@ -315,32 +326,6 @@ def surprise():
         type_of_surprise="TV Show"
 
     return render_template('surprise.html',name=name_of_surprise,image=image_of_surprise,type=type_of_surprise)
-
-# curd operations
-@app.route("/get_all_data", methods = ['GET'])
-def get_all_contact():
-    try:
-        users = db.users.find()
-        return dumps(users)
-    except Exception as e:
-        return dumps({'error' : str(e)})
-
-@app.route("/add_details")
-def add_details():
-    try:
-        id=db.users.find().count()+1
-        first_name = "Liam"
-        last_name = "Pyane"
-
-        if first_name and last_name:
-            db.users.insert_one({
-                "id" : id,
-                "first_name" : first_name,
-                "last_name" : last_name
-            })
-        return dumps({'message' : 'SUCCESS'})
-    except Exception as e:
-        return dumps({'error' : str(e)})
 
 if __name__ == '__main__':
     app.run(debug = True, threaded = True)

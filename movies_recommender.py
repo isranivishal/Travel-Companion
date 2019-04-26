@@ -162,5 +162,5 @@ def get_movie_recommendation(title):
     qualified['vote_count'] = qualified['vote_count'].astype('int')
     qualified['vote_average'] = qualified['vote_average'].astype('int')
     qualified['wr'] = qualified.apply(weighted_rating, axis=1)
-    qualified = qualified.sort_values('wr', ascending=False).head(10)
+    qualified = qualified.sort_values('wr', ascending=False).head(3)
     return qualified['title']

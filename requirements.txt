@@ -5,3 +5,6 @@ flask_bcrypt
 nltk
 sklearn
 surprise
+matplotlib
+seaborn
+nltk
