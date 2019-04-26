@@ -6,13 +6,22 @@ from flask_bcrypt import Bcrypt
 import numpy as np
 import pandas as pd
 import random
+import pysolr
+from urllib.request import *
+from urllib.error import *
+from flask_web3 import current_web3, FlaskWeb3
+import os
 
-from .movies_recommender import get_top_movies_list,get_movie_recommendation,get_genre_list
+# from .movies_recommender import get_top_movies_list,get_movie_recommendation,get_genre_list
 
 client = MongoClient('127.0.0.1:27017')
 db = client.travel_companion
 
 app = Flask(__name__)
+
+app.config.update({'ETHEREUM_PROVIDER': 'http', 'ETHEREUM_ENDPOINT_URI': 'http://localhost:7545'})
+web3 = FlaskWeb3(app=app)
+
 app.secret_key='mysecret'
 bcrypt = Bcrypt(app)
 
@@ -273,28 +282,24 @@ def books_home():
 @app.route("/movies_home")
 def movies_home():
 
-    toplist=get_top_movies_list().tolist()
+    # toplist=get_top_movies_list().tolist()
 
-    actionlist=get_genre_list('Action').tolist()
-    horrorlist=get_genre_list('Horror').tolist()
-    dramalist=get_genre_list('Drama').tolist()
-    thrillerlist=get_genre_list('Thriller').tolist()
-    comedylist=get_genre_list('Comedy').tolist()
-    romancelist=get_genre_list('Romance').tolist()
+    # actionlist=get_genre_list('Action').tolist()
+    # horrorlist=get_genre_list('Horror').tolist()
+    # dramalist=get_genre_list('Drama').tolist()
+    # thrillerlist=get_genre_list('Thriller').tolist()
+    # comedylist=get_genre_list('Comedy').tolist()
+    # romancelist=get_genre_list('Romance').tolist()
 
-    user_history = db.users.find({'id' : session['id']},{'_id':0,'history' : 1 })
-    recommendation=[]
+    # user_history = db.users.find({'id' : session['id']},{'_id':0,'history' : 1 })
+    # recommendation=[]
 
-    for doc in user_history:
-        for movies in doc['history']['movies']:
-            temp=get_movie_recommendation(movies).tolist()
-            recommendation.append(temp)
-
-    return render_template('movies-home.html',recommendation=recommendation ,toplist=toplist,actionlist=actionlist,comedylist=comedylist,horrorlist=horrorlist,dramalist=dramalist,thrillerlist=thrillerlist,romancelist=romancelist)
-
-@app.route("/songs_home")
-def songs_home():
-    return render_template('songs-home.html')
+    # for doc in user_history:
+    #     for movies in doc['history']['movies']:
+    #         temp=get_movie_recommendation(movies).tolist()
+    #         recommendation.append(temp)
+# ,recommendation=recommendation ,toplist=toplist,actionlist=actionlist,comedylist=comedylist,horrorlist=horrorlist,dramalist=dramalist,thrillerlist=thrillerlist,romancelist=romancelist
+    return render_template('movies-home.html')
 
 @app.route("/places-near-by")
 def places_near_by():
@@ -326,6 +331,77 @@ def surprise():
         type_of_surprise="TV Show"
 
     return render_template('surprise.html',name=name_of_surprise,image=image_of_surprise,type=type_of_surprise)
+
+@app.route('/blockNumber',methods=['GET','POST'])
+def blockNumber():
+    songid=request.args.get('songid')
+    Solrquery="http://localhost:8983/solr/UnifiedUserId/select?q=UnifiedId:"+str(session['id'])+"&wt=python"
+    connection=urlopen(Solrquery)
+    response = eval(connection.read())
+    print(response)
+    songuserid=response['response']['docs'][0]['SongUserId'][0]
+    solr = pysolr.Solr('http://localhost:8983/solr/tempMillionSongsData')
+    solr.add([
+        {
+            "user_id":songuserid,
+            "song_id": songid,
+            "listen_count":0,
+        },
+    ])
+    solr.commit()
+    fromaddr=current_web3.eth.accounts[session['id']]
+    toaddr=current_web3.eth.accounts[0]
+    web3.eth.sendTransaction({'from': fromaddr, 'to': toaddr, 'value': current_web3.toWei("1", 'ether')})
+    balance=current_web3.eth.getBalance(current_web3.eth.accounts[0])
+    return render_template('success.html',songid=songid,songuserid=songuserid,balance=balance)
+
+@app.route('/songs_home',methods=['GET','POST'])
+def songs_home():
+    os.system("cls")
+    user_history = db.users.find({'id' : session['id']},{'_id':0,'history' : 1 })
+    title=""
+    for doc in user_history:
+        for songs in doc['history']['songs']:
+            title=songs
+            break
+
+    title=title[:len(title)].replace(" ","%20")
+
+    # artist_name=request.args.get('artist_name')
+    # release=request.args.get('release')
+    # title=request.args.get('title')
+
+    Solrquery="http://localhost:8983/solr/SongData/select?q=(title:%22"+title+"%22)"+"&rows=1&start=0&wt=python"
+    connection=urlopen(Solrquery)
+
+    response1 = eval(connection.read())
+
+    release=response1['response']['docs'][0]['release'][0]
+    artist_name=response1['response']['docs'][0]['artist_name'][0]
+
+    artist_name=artist_name[:len(artist_name)].replace(" ","%20")
+    release=release[:len(release)].replace(" ","%20")
+
+    Solrquery="http://localhost:8983/solr/SongData/select?q=(artist_name:%22"+artist_name+"%22%20AND%20release:%22"+release+"%22"+"%20AND%20title:%22"+title+"%22)&mlt=true&mlt.fl=title,release,artist_name&mlt.mindf=1&mlt.mintf=1&mlt.boost=true&mlt.count=10&mlt.match.include=false"+"&wt=python"
+
+    connection=urlopen(Solrquery)
+    response = eval(connection.read())
+    songresultlist=[]
+    songidlist=[]
+    songreleaselist=[]
+    songartistlist=[]
+    songyearlist=[]
+    for document in response['response']['docs']:
+        song_id=document['id']
+        i=0
+        for similarsongs in response['moreLikeThis'][song_id]['docs']:
+            songresultlist.append(similarsongs['title'][0])
+            songidlist.append(similarsongs['song_id'][0])
+            songreleaselist.append(similarsongs['release'][0])
+            songartistlist.append(similarsongs['artist_name'][0])
+            songyearlist.append(similarsongs['year'][0])
+    return 	render_template('songs-home.html',response=songresultlist,response2=songidlist,response3=songreleaselist,response4=songartistlist,response5=songyearlist)
+
 
 if __name__ == '__main__':
     app.run(debug = True, threaded = True)

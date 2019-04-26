@@ -8,3 +8,4 @@ surprise
 matplotlib
 seaborn
 nltk
+pysolr
